@@ -1,0 +1,327 @@
+<div class="container mt-4">
+
+  <!-- ================================= -->
+  <!-- ENCABEZADO -->
+  <!-- ================================= -->
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h2>
+      Equipos
+    </h2>
+
+    <button type="button"
+            class="btn btn-primary"
+            (click)="newTeam()">
+
+      Nuevo equipo
+
+    </button>
+
+  </div>
+
+
+  <!-- ================================= -->
+  <!-- FORMULARIO -->
+  <!-- ================================= -->
+  @if (showForm) {
+
+  <div class="card mb-4">
+
+    <div class="card-header">
+
+      <h4 class="mb-0">
+
+        {{
+ editing
+            ? 'Editar equipo'
+            : 'Nuevo equipo'
+        }}
+
+      </h4>
+
+    </div>
+
+
+    <div class="card-body">
+
+      <!-- ============================= -->
+      <!-- NOMBRE -->
+      <!-- ============================= -->
+
+      <div class="mb-3">
+
+        <label for="name"
+               class="form-label">
+
+          Nombre
+
+        </label>
+
+        <input id="name"
+               type="text"
+               class="form-control"
+               [(ngModel)]="currentTeam.name"
+               placeholder="Nombre del equipo">
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- PAÍS -->
+      <!-- ============================= -->
+
+      <div class="mb-3">
+
+        <label for="country"
+               class="form-label">
+
+          País
+
+        </label>
+
+        <input id="country"
+               type="text"
+               class="form-control"
+               [(ngModel)]="currentTeam.country"
+               placeholder="País">
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- JUGADORES -->
+      <!-- ============================= -->
+
+      <div class="mb-3">
+
+        <label for="playersQuantity"
+               class="form-label">
+
+          Cantidad de jugadores
+
+        </label>
+
+        <input id="playersQuantity"
+               type="number"
+               class="form-control"
+               [(ngModel)]="currentTeam.playersQuantity"
+               min="11"
+               max="22">
+
+        <div class="form-text">
+
+          La cantidad debe estar entre
+          <strong>11 y 22</strong> jugadores.
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- ENABLED -->
+      <!-- ============================= -->
+
+      <div class="form-check mb-3">
+
+        <input id="enabled"
+               type="checkbox"
+               class="form-check-input"
+               [(ngModel)]="currentTeam.enabled">
+
+        <label for="enabled"
+               class="form-check-label">
+
+          Equipo activo
+
+        </label>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- BOTONES -->
+      <!-- ============================= -->
+
+      <button type="button"
+              class="btn btn-success me-2"
+              (click)="saveTeam()">
+
+        {{
+ editing
+            ? 'Actualizar'
+            : 'Guardar'
+        }}
+
+      </button>
+
+
+      <button type="button"
+              class="btn btn-secondary"
+              (click)="cancelForm()">
+
+        Cancelar
+
+      </button>
+
+    </div>
+
+  </div>
+
+  }
+
+
+  <!-- ================================= -->
+  <!-- TABLA -->
+  <!-- ================================= -->
+
+  <div class="table-responsive">
+
+    <table class="table table-striped table-bordered">
+
+      <!-- ============================= -->
+      <!-- CABECERA -->
+      <!-- ============================= -->
+
+      <thead class="table-dark">
+
+        <tr>
+
+          <th>
+            ID
+          </th>
+
+          <th>
+            Nombre
+          </th>
+
+          <th>
+            País
+          </th>
+
+          <th>
+            Jugadores
+          </th>
+
+          <th>
+            Estado
+          </th>
+
+          <th>
+            Acciones
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <!-- ============================= -->
+      <!-- DATOS -->
+      <!-- ============================= -->
+
+      <tbody>
+
+        @for (
+        team of teams;
+        track team.id
+        ) {
+
+        <tr>
+
+          <td>
+            {{ team.id }}
+          </td>
+
+          <td>
+            {{ team.name }}
+          </td>
+
+          <td>
+            {{ team.country }}
+          </td>
+
+          <td>
+            {{ team.playersQuantity }}
+          </td>
+
+          <td>
+
+            @if (team.enabled) {
+
+            <span class="badge bg-success">
+
+              Activo
+
+            </span>
+
+            }
+            @else {
+
+            <span class="badge bg-danger">
+
+              Inactivo
+
+            </span>
+
+            }
+
+          </td>
+
+
+          <td>
+
+            <!-- EDITAR -->
+
+            <button type="button"
+                    class="btn btn-warning btn-sm me-2"
+                    (click)="editTeam(team)">
+
+              Editar
+
+            </button>
+
+
+            <!-- ELIMINAR -->
+
+            <button type="button"
+                    class="btn btn-danger btn-sm"
+                    (click)="deleteTeam(team.id)">
+
+              Eliminar
+
+            </button>
+
+          </td>
+
+        </tr>
+
+        }
+
+
+        <!-- ============================= -->
+        <!-- SIN REGISTROS -->
+        <!-- ============================= -->
+        @if (teams.length === 0) {
+
+        <tr>
+
+          <td colspan="6"
+              class="text-center">
+
+            No hay equipos registrados.
+
+          </td>
+
+        </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

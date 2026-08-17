@@ -1,0 +1,284 @@
+<div class="container mt-4">
+
+
+  <!-- ================================= -->
+  <!-- TÍTULO -->
+  <!-- ================================= -->
+
+  <div class="mb-4">
+
+    <h2>
+      Inscripción de equipos
+    </h2>
+
+    <p class="text-muted">
+      Asigna equipos a diferentes ligas.
+    </p>
+
+  </div>
+
+
+  <!-- ================================= -->
+  <!-- FORMULARIO -->
+  <!-- ================================= -->
+
+  <div class="card mb-4">
+
+
+    <div class="card-header">
+
+      <h5 class="mb-0">
+        Inscribir equipo en una liga
+      </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+      <!-- =============================== -->
+      <!-- LEAGUE -->
+      <!-- =============================== -->
+
+      <div class="mb-3">
+
+        <label for="league"
+               class="form-label">
+
+          Liga
+
+        </label>
+
+
+        <select id="league"
+                class="form-select"
+                [(ngModel)]="currentTeamLeague.leagueId">
+
+          <option [ngValue]="0">
+
+            Selecciona una liga
+
+          </option>
+
+
+          @for (
+          league of leagues;
+          track league.id
+          ) {
+
+          <option [ngValue]="league.id">
+
+            {{ league.name }}
+
+          </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =============================== -->
+      <!-- TEAM -->
+      <!-- =============================== -->
+
+      <div class="mb-3">
+
+        <label for="team"
+               class="form-label">
+
+          Equipo
+
+        </label>
+
+
+        <select id="team"
+                class="form-select"
+                [(ngModel)]="currentTeamLeague.teamId">
+
+          <option [ngValue]="0">
+
+            Selecciona un equipo
+
+          </option>
+
+
+          @for (
+          team of teams;
+          track team.id
+          ) {
+
+          <option [ngValue]="team.id">
+
+            {{ team.name }}
+
+          </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =============================== -->
+      <!-- BOTÓN -->
+      <!-- =============================== -->
+
+      <button type="button"
+              class="btn btn-primary"
+              (click)="createTeamLeague()">
+
+        Inscribir equipo
+
+      </button>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================= -->
+  <!-- RELACIONES -->
+  <!-- ================================= -->
+
+  <div class="card">
+
+
+    <div class="card-header">
+
+      <h5 class="mb-0">
+        Equipos inscritos
+      </h5>
+
+    </div>
+
+
+    <div class="card-body p-0">
+
+
+      <div class="table-responsive">
+
+
+        <table class="table table-striped table-bordered mb-0">
+
+
+          <!-- ============================= -->
+          <!-- CABECERA -->
+          <!-- ============================= -->
+
+          <thead class="table-dark">
+
+            <tr>
+
+              <th>
+                Liga
+              </th>
+
+              <th>
+                Equipo
+              </th>
+
+              <th>
+                League ID
+              </th>
+
+              <th>
+                Team ID
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <!-- ============================= -->
+          <!-- DATOS -->
+          <!-- ============================= -->
+
+          <tbody>
+
+
+            @for (
+            relationship of teamLeagues;
+            track relationship.leagueId + '-' + relationship.teamId
+            ) {
+
+            <tr>
+
+              <td>
+
+                {{
+                    getLeagueName(
+                      relationship.leagueId
+                    )
+                }}
+
+              </td>
+
+
+              <td>
+
+                {{
+                    getTeamName(
+                      relationship.teamId
+                    )
+                }}
+
+              </td>
+
+
+              <td>
+
+                {{ relationship.leagueId }}
+
+              </td>
+
+
+              <td>
+
+                {{ relationship.teamId }}
+
+              </td>
+
+            </tr>
+
+            }
+
+
+            <!-- ============================= -->
+            <!-- SIN REGISTROS -->
+            <!-- ============================= -->
+            @if (
+            teamLeagues.length === 0
+            ) {
+
+            <tr>
+
+              <td colspan="4"
+                  class="text-center">
+
+                No hay equipos inscritos.
+
+              </td>
+
+            </tr>
+
+            }
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

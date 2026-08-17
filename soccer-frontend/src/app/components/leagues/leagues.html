@@ -1,0 +1,347 @@
+<div class="container mt-4">
+
+  <!-- ================================= -->
+  <!-- ENCABEZADO -->
+  <!-- ================================= -->
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h2>
+      Ligas
+    </h2>
+
+    <button type="button"
+            class="btn btn-primary"
+            (click)="newLeague()">
+
+      Nueva liga
+
+    </button>
+
+  </div>
+
+
+  <!-- ================================= -->
+  <!-- FORMULARIO -->
+  <!-- ================================= -->
+  @if (showForm) {
+
+  <div class="card mb-4">
+
+    <div class="card-header">
+
+      <h4 class="mb-0">
+
+        {{
+ editing
+            ? 'Editar liga'
+            : 'Nueva liga'
+        }}
+
+      </h4>
+
+    </div>
+
+
+    <div class="card-body">
+
+      <!-- ============================= -->
+      <!-- NOMBRE -->
+      <!-- ============================= -->
+
+      <div class="mb-3">
+
+        <label for="name"
+               class="form-label">
+
+          Nombre
+
+        </label>
+
+        <input id="name"
+               type="text"
+               class="form-control"
+               [(ngModel)]="currentLeague.name"
+               placeholder="Nombre de la liga">
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- PAÍS -->
+      <!-- ============================= -->
+
+      <div class="mb-3">
+
+        <label for="country"
+               class="form-label">
+
+          País
+
+        </label>
+
+        <input id="country"
+               type="text"
+               class="form-control"
+               [(ngModel)]="currentLeague.country"
+               placeholder="País">
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- FECHA INICIO -->
+      <!-- ============================= -->
+
+      <div class="mb-3">
+
+        <label for="startDate"
+               class="form-label">
+
+          Fecha de inicio
+
+        </label>
+
+        <input id="startDate"
+               type="date"
+               class="form-control"
+               [(ngModel)]="currentLeague.startDate">
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- FECHA FIN -->
+      <!-- ============================= -->
+
+      <div class="mb-3">
+
+        <label for="endDate"
+               class="form-label">
+
+          Fecha de fin
+
+        </label>
+
+        <input id="endDate"
+               type="date"
+               class="form-control"
+               [(ngModel)]="currentLeague.endDate">
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- ENABLED -->
+      <!-- ============================= -->
+
+      <div class="form-check mb-3">
+
+        <input id="enabled"
+               type="checkbox"
+               class="form-check-input"
+               [(ngModel)]="currentLeague.enabled">
+
+        <label for="enabled"
+               class="form-check-label">
+
+          Liga activa
+
+        </label>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- BOTONES -->
+      <!-- ============================= -->
+
+      <button type="button"
+              class="btn btn-success me-2"
+              (click)="saveLeague()">
+
+        {{
+ editing
+            ? 'Actualizar'
+            : 'Guardar'
+        }}
+
+      </button>
+
+
+      <button type="button"
+              class="btn btn-secondary"
+              (click)="cancelForm()">
+
+        Cancelar
+
+      </button>
+
+    </div>
+
+  </div>
+
+  }
+
+
+  <!-- ================================= -->
+  <!-- TABLA -->
+  <!-- ================================= -->
+
+  <div class="table-responsive">
+
+    <table class="table table-striped table-bordered">
+
+      <!-- ============================= -->
+      <!-- CABECERA -->
+      <!-- ============================= -->
+
+      <thead class="table-dark">
+
+        <tr>
+
+          <th>
+            ID
+          </th>
+
+          <th>
+            Nombre
+          </th>
+
+          <th>
+            País
+          </th>
+
+          <th>
+            Fecha inicio
+          </th>
+
+          <th>
+            Fecha fin
+          </th>
+
+          <th>
+            Estado
+          </th>
+
+          <th>
+            Acciones
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <!-- ============================= -->
+      <!-- DATOS -->
+      <!-- ============================= -->
+
+      <tbody>
+
+        @for (
+        league of leagues;
+        track league.id
+        ) {
+
+        <tr>
+
+          <td>
+            {{ league.id }}
+          </td>
+
+          <td>
+            {{ league.name }}
+          </td>
+
+          <td>
+            {{ league.country }}
+          </td>
+
+          <td>
+            {{ league.startDate | date:'dd/MM/yyyy' }}
+          </td>
+
+          <td>
+            {{ league.endDate | date:'dd/MM/yyyy' }}
+          </td>
+
+          <td>
+
+            @if (league.enabled) {
+
+            <span class="badge bg-success">
+
+              Activa
+
+            </span>
+
+            }
+            @else {
+
+            <span class="badge bg-danger">
+
+              Inactiva
+
+            </span>
+
+            }
+
+          </td>
+
+
+          <td>
+
+            <!-- EDITAR -->
+
+            <button type="button"
+                    class="btn btn-warning btn-sm me-2"
+                    (click)="editLeague(league)">
+
+              Editar
+
+            </button>
+
+
+            <!-- ELIMINAR -->
+
+            <button type="button"
+                    class="btn btn-danger btn-sm"
+                    (click)="deleteLeague(league.id)">
+
+              Eliminar
+
+            </button>
+
+          </td>
+
+        </tr>
+
+        }
+
+
+        <!-- ============================= -->
+        <!-- SIN REGISTROS -->
+        <!-- ============================= -->
+        @if (leagues.length === 0) {
+
+        <tr>
+
+          <td colspan="7"
+              class="text-center">
+
+            No hay ligas registradas.
+
+          </td>
+
+        </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
